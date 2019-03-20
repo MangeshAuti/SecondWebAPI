@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 using EmployeeDataAccess;
 
@@ -11,12 +12,21 @@ namespace SecondWebAPI.Controllers
    
     public class EmployeeController : ApiController
     {
+        [BasicAuthorization]
         // GET api/Employee
-        public IEnumerable<Employee> Get()
+        public HttpResponseMessage Get()
         {
-            using (EmployeeDBEntities entities=new EmployeeDBEntities())
+            if (Thread.CurrentPrincipal.IsInRole("Admin"))
             {
-                return entities.Employees.ToList();
+                using (EmployeeDBEntities entities=new EmployeeDBEntities())
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+                    //return entities.Employees.ToList();
+                }
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "User is not admin");
             }
         }
 
