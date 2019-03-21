@@ -12,22 +12,22 @@ namespace SecondWebAPI.Controllers
    
     public class EmployeeController : ApiController
     {
-        [BasicAuthorization]
+        [Authorize]
         // GET api/Employee
         public HttpResponseMessage Get()
         {
-            if (Thread.CurrentPrincipal.IsInRole("Admin"))
-            {
+            //if (Thread.CurrentPrincipal.IsInRole("Admin"))
+            //{
                 using (EmployeeDBEntities entities=new EmployeeDBEntities())
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
                     //return entities.Employees.ToList();
                 }
-            }
-            else
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "User is not admin");
-            }
+            //}
+            //else
+            //{
+              //  return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "User is not admin");
+            //}
         }
 
         // GET api/Employee/5
