@@ -77,10 +77,25 @@
             });
 
             $('#btnLogoff').click(function () {
-                sessionStorage.removeItem('accessToken');
-                sessionStorage.removeItem('userName');
-                window.location.href = "Login.html";
+                $.ajax({
+                    url: 'api/Account/Logout',
+                    method: 'POST',
+                    success: function (data) {
+                        sessionStorage.removeItem('accessToken');
+                        sessionStorage.removeItem('userName');
+                        window.location.href = "Login.html";
+                    },
+                    error: function (jqXHR) {
+                        $('#divErrorText').text(jqXHR.responseText);
+                        $('#divError').show('fade');
+                        sessionStorage.removeItem('accessToken');
+                        sessionStorage.removeItem('userName');
+                        window.location.href = "Login.html";
+                    }
+                });
             });
+
+
 
             $('#btnLoadEmployees').click(function () {
                 $.ajax({

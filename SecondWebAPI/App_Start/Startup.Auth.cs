@@ -10,6 +10,8 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SecondWebAPI.Providers;
 using SecondWebAPI.Models;
+using Microsoft.Owin.Security.Facebook;
+using SecondWebAPI.Facebook;
 
 namespace SecondWebAPI
 {
@@ -58,6 +60,16 @@ namespace SecondWebAPI
             //app.UseFacebookAuthentication(
             //    appId: "",
             //    appSecret: "");
+            var facebookOptions = new FacebookAuthenticationOptions()
+            {
+                AppId = "",
+                AppSecret = "",
+                BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,email"
+            };
+
+            facebookOptions.Scope.Add("email");
+            app.UseFacebookAuthentication(facebookOptions);
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
