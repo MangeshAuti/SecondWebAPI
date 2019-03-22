@@ -9,18 +9,20 @@ using EmployeeDataAccess;
 
 namespace SecondWebAPI.Controllers
 {
-   
+
+    [RoutePrefix("api/Employee")]
     public class EmployeeController : ApiController
     {
         [Authorize]
         // GET api/Employee
-        public HttpResponseMessage Get()
+        //IHttpActionResult webapi2 system.web.http
+        public IHttpActionResult Get()
         {
             //if (Thread.CurrentPrincipal.IsInRole("Admin"))
             //{
                 using (EmployeeDBEntities entities=new EmployeeDBEntities())
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+                    return Ok(entities.Employees.ToList());
                     //return entities.Employees.ToList();
                 }
             //}
@@ -31,6 +33,7 @@ namespace SecondWebAPI.Controllers
         }
 
         // GET api/Employee/5
+        [Route("{id:int:min(0)}")]
         public HttpResponseMessage Get(int id)
         {
             using (EmployeeDBEntities entities = new EmployeeDBEntities())

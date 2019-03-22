@@ -6,9 +6,11 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Dispatcher;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SecondWebAPI.CustomVersioning;
 
 namespace SecondWebAPI
 {
@@ -45,6 +47,17 @@ namespace SecondWebAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+
+            //versioning controller selector
+            config.Services.Replace(typeof(IHttpControllerSelector), new CustomControllerSelector(config));
+
+            //custom media type support json
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/vnd.mangeshtech.students.v1+json"));
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/vnd.mangeshtech.students.v2+json"));
+            ////custom media type supprt xml
+            //config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/vnd.mangeshtech.students.v1+xml"));
+            //config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/vnd.mangeshtech.students.v2+xml"));
 
             //from browser request response goes in json format
             //config.Formatters.Add(new CustomJsonFormatter());
