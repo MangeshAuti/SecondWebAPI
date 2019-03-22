@@ -1,0 +1,19 @@
+﻿
+CREATE DATABASE EmployeeDB;
+
+CREATE TABLE [dbo].[Employee] (
+    [Id]        INT          IDENTITY (1, 1) NOT NULL,
+    [FirstName] VARCHAR (50) NULL,
+    [LastName]  VARCHAR (50) NULL,
+    [Gender]    VARCHAR (50) NULL,
+    [Salary]    INT          NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Users] (
+    [Id]       INT          IDENTITY (1, 1) NOT NULL,
+    [Username] VARCHAR (50) NULL,
+    [Password] VARCHAR (50) NULL,
+    [Role]     VARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);

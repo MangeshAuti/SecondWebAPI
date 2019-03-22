@@ -87,6 +87,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\databaseScript.txt" />
     <Content Include="EmployeeModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EmployeeModel.Context.cs</LastGenOutput>
